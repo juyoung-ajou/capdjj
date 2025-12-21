@@ -3,7 +3,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from models import ChatRequest       # 분리한 모델 임포트
-from rag_core import RAGService      # 분리한 로직 임포트
+from rag_core import RAGService      # 분리한 로직 임포트0   dddddddddddddd
 
 app = FastAPI()
 
