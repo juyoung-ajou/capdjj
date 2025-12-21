@@ -1,6 +1,7 @@
 # backend/rag_core.py
 
 import os
+import re
 # 환경 변수 로딩을 위한 라이브러리
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
@@ -10,6 +11,10 @@ import chromadb
 
 # .env 파일에서 API 키를 불러옵니다.
 load_dotenv()
+
+def extract_department(filename: str):
+    match = re.search(r"([가-힣]+학과)", filename)
+    return match.group(1) if match else None
 
 class RAGService:
     def __init__(self):
@@ -27,6 +32,8 @@ class RAGService:
         
         self.persist_directory = "chroma_db"
         self.collection_name = "rag_collection"
+        self.pdf_source_dir = "pdf_documents"
+        self.departments = self._load_departments()
         
         self.client = chromadb.PersistentClient(path=self.persist_directory)
         self.vector_store = None
@@ -42,12 +49,39 @@ class RAGService:
         except Exception:
             print(f" [오류] 벡터 DB를 찾을 수 없습니다. python build_db.py를 실행하세요.")
 
+    def _load_departments(self):
+        departments = set()
+        try:
+            for filename in os.listdir(self.pdf_source_dir):
+                if not filename.lower().endswith(".pdf"):
+                    continue
+                dept = extract_department(filename)
+                if dept:
+                    departments.add(dept)
+        except Exception:
+            pass
+        return sorted(list(departments), key=len, reverse=True)
+
+    def _detect_department(self, query: str):
+        for dept in self.departments:
+            if dept in query:
+                return dept
+        return None
+
     def get_answer(self, query: str):
         if self.vector_store is None:
             return {"answer": "DB가 없습니다.", "sources": [], "context": ""}
         
         # [변경 1] 문서 검색 개수를 5개 -> 7개로 늘려 비교군 확보
-        retrieved_docs = self.vector_store.similarity_search(query, k=7)
+        department = self._detect_department(query)
+        if department:
+            retrieved_docs = self.vector_store.similarity_search(
+                query,
+                k=7,
+                filter={"department": department},
+            )
+        else:
+            retrieved_docs = self.vector_store.similarity_search(query, k=7)
         
         # [변경 2] AI가 연도를 구분할 수 있도록 [[출처: 파일명]]을 내용 앞에 붙여줌
         context_list = []

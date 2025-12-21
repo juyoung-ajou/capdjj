@@ -1,6 +1,8 @@
 # backend/build_db.py
 import os
 import glob
+import re
+from typing import Optional
 import pdfplumber
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
@@ -74,6 +76,11 @@ def pdf_to_markdown(pdf_path):
 
     return full_text
 
+def extract_department(filename: str) -> Optional[str]:
+    # Extract first "<Korean>학과" from filename.
+    match = re.search(r"([가-힣]+학과)", filename)
+    return match.group(1) if match else None
+
 def build_vector_db():
     print("="*50)
     if not os.path.isdir(PDF_SOURCE_DIR):
@@ -102,7 +109,11 @@ def build_vector_db():
         markdown_text = pdf_to_markdown(pdf_path)
         
         if markdown_text:
-            raw_doc = Document(page_content=markdown_text, metadata={"source": filename})
+            department = extract_department(filename)
+            metadata = {"source": filename}
+            if department:
+                metadata["department"] = department
+            raw_doc = Document(page_content=markdown_text, metadata=metadata)
             docs = text_splitter.split_documents([raw_doc])
             all_docs.extend(docs)
             print(f" -> {len(docs)}개 청크 생성 완료")
