@@ -1,0 +1,19 @@
+# --- 시스템/에디터 파일 ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- Python & Django ---
+venv/
+env/
+__pycache__/
+*.pyc
+db.sqlite3
+.env
+
+# --- Node.js & React (프론트엔드 있다면) ---
+node_modules/
+build/
+dist/
+.env.local

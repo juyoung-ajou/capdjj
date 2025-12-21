@@ -1,0 +1,286 @@
+:root {
+  /* 아주대학교 테마 컬러 정의 */
+  --ajou-blue: #005BAB;       /* 메인 컬러 */
+  --ajou-blue-light: #e6f0fa; /* 연한 배경용 블루 */
+  --ajou-gold: #BB8D0A;       /* 포인트/강조 컬러 */
+  --ajou-gold-light: #fff8e1; /* 연한 배경용 골드 */
+  
+  --text-dark: #333333;
+  --text-gray: #666666;
+  --bg-soft: #f4f6f9;         /* 전체 배경색 */
+  --white: #ffffff;
+  --shadow: 0 8px 20px rgba(0, 91, 171, 0.1); /* 부드러운 푸른 그림자 */
+  --radius: 20px;             /* 둥근 모서리 정도 */
+}
+
+body {
+  background-color: var(--bg-soft);
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: var(--text-dark); /* 기본 글씨 색상 지정 */
+}
+
+#root {
+  width: 100%;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+/* 메인 컨테이너 */
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* 헤더 스타일 */
+.header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.header h1 {
+  color: var(--ajou-blue);
+  font-size: 28px;
+  margin: 0;
+  font-weight: 800;
+}
+
+.header p {
+  color: var(--text-gray);
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+/* 1. 설정 및 업로드 섹션 (카드 스타일) */
+.upload-section {
+  background-color: var(--white);
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 25px;
+  transition: all 0.3s ease;
+}
+
+.upload-section:hover {
+  border-color: var(--ajou-blue);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* 슬라이더 스타일 */
+.slider-container {
+  margin-bottom: 25px;
+}
+
+.slider-label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-dark);
+  font-size: 16px;
+}
+
+.slider-value {
+  color: var(--ajou-blue);
+  font-size: 1.2em;
+  font-weight: 800;
+}
+
+.range-input {
+  width: 100%;
+  cursor: pointer;
+  accent-color: var(--ajou-blue); /* 슬라이더 색상 */
+  height: 6px;
+  background: #ddd;
+  border-radius: 5px;
+}
+
+.tip-box {
+  background-color: var(--bg-soft);
+  padding: 12px 15px;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text-gray);
+  line-height: 1.5;
+  border-left: 4px solid var(--ajou-blue);
+}
+
+/* 파일 업로드 컨트롤 영역 */
+.file-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.file-input {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text-dark); /* 파일명 글씨 색상 */
+}
+
+.btn-primary {
+  background-color: var(--ajou-blue);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  background-color: #00458a;
+}
+
+.btn-primary:disabled {
+  background-color: #a0c4e8;
+  cursor: not-allowed;
+}
+
+/* 2. 채팅창 영역 */
+.chat-window {
+  height: 500px;
+  overflow-y: auto;
+  background-color: var(--bg-soft);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* 스크롤바 커스텀 */
+.chat-window::-webkit-scrollbar {
+  width: 8px;
+}
+.chat-window::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+/* 메시지 버블 공통 */
+.message-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 75%;
+}
+
+.msg-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+/* 사용자 메시지 (오른쪽) */
+.msg-wrapper.user {
+  align-items: flex-end;
+}
+
+.msg-wrapper.user .message-bubble {
+  background-color: var(--ajou-blue);
+  color: white;
+  border-radius: 18px 18px 4px 18px; /* 말풍선 모양 */
+  padding: 14px 18px;
+  font-size: 15px;
+  line-height: 1.5;
+  box-shadow: 0 2px 5px rgba(0,91,171,0.2);
+}
+
+/* 봇 메시지 (왼쪽) */
+.msg-wrapper.bot {
+  align-items: flex-start;
+}
+
+.msg-wrapper.bot .message-bubble {
+  background-color: var(--white);
+  color: var(--text-dark);
+  border: 1px solid #eee;
+  border-radius: 18px 18px 18px 4px; /* 말풍선 모양 */
+  padding: 14px 18px;
+  font-size: 15px;
+  line-height: 1.6;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* 출처 태그 스타일 */
+.source-container {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-gray);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.source-badge {
+  background-color: var(--ajou-gold-light);
+  color: #8a6d05;
+  border: 1px solid #ebdcb2;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.loading-text {
+  text-align: center;
+  color: var(--text-gray);
+  font-size: 13px;
+  padding: 10px;
+  font-style: italic;
+}
+
+/* 3. 입력창 영역 */
+.input-area {
+  display: flex;
+  gap: 12px;
+  background: var(--white);
+  padding: 10px;
+  border-radius: 16px;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.chat-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 12px;
+  font-size: 16px;
+  outline: none;
+  color: var(--text-dark); /* [중요] 글씨 색상을 검정색(#333)으로 지정! */
+}
+
+.btn-send {
+  background-color: var(--ajou-gold); /* 전송 버튼은 골드로 포인트 */
+  color: white;
+  border: none;
+  padding: 0 25px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.1s;
+}
+
+.btn-send:hover {
+  background-color: #a67c06;
+}
+
+.btn-send:active {
+  transform: scale(0.96);
+}
