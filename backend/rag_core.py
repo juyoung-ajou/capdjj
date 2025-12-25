@@ -21,7 +21,7 @@ class RAGService:
         print(" [시스템] 하이브리드 검색(BM25 + Vector) 엔진 로딩 중...")
         
         # 1. [Triplet Loss 원리] 임베딩 모델
-        self.embeddings = HuggingFaceEmbeddings(model_name="jhgan/ko-sroberta-multitask")
+        self.embeddings = HuggingFaceEmbeddings(model_name="./my_finetuned_model")
         
         self.llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
         

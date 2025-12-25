@@ -98,7 +98,7 @@ def build_vector_db():
         chunk_size=CHUNK_SIZE, 
         chunk_overlap=CHUNK_OVERLAP
     )
-    embeddings = HuggingFaceEmbeddings(model_name="jhgan/ko-sroberta-multitask")
+    embeddings = HuggingFaceEmbeddings(model_name="./my_finetuned_model")
     
     all_docs = []
     
