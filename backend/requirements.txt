@@ -1,13 +1,23 @@
+# --- 웹 프레임워크 & 기본 도구 ---
 fastapi
 uvicorn[standard]
-requests
-ollama
-langchain
-langchain-community 
-chromadb
-langchain-huggingface
-sentence-transformers
+python-dotenv
 pydantic
+requests
+
+# --- AI & LangChain (충돌 방지 버전) ---
+langchain-community
+langchain-core
+langchain-openai
+langchain-huggingface
+
+# --- 벡터 DB & 검색 알고리즘 ---
+chromadb
+rank_bm25
+sentence-transformers
+
+# --- PDF 분석 (에러 없는 라이브러리) ---
+pdfplumber
 pypdf
-python-multipart
-unstructured[pdf]
+
+pydantic-settings
